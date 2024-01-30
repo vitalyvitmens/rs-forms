@@ -87,7 +87,8 @@ export function Signin(props) {
 					type="text"
 					id="placeholder"
 					name="placeholder"
-					placeholder="Your email"
+					placeholder="Placeholder"
+					value={placeholder}
 					radius={5}
 					onChange={handlePlaceholderChange}
 				/>
@@ -96,7 +97,8 @@ export function Signin(props) {
 					type="text"
 					id="label"
 					name="label"
-					placeholder="Email"
+					placeholder="Label"
+					value={label}
 					radius={5}
 					onChange={handleLabelChange}
 				/>
