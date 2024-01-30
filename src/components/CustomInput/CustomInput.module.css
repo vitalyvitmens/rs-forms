@@ -45,6 +45,14 @@
 	cursor: not-allowed;
 }
 
+.error {
+	display: block;
+	width: 340px;
+	font-size: 12px;
+	line-height: 14.4px;
+	color: rgb(250, 82, 82);
+}
+
 ::placeholder {
 	color: rgb(206, 212, 218);
 }
