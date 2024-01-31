@@ -8,7 +8,7 @@ export function Signin(props) {
 
 	const [placeholder, setPlaceholder] = useState('Your email')
 	const [label, setLabel] = useState('Email')
-	const [description, setDescription] = useState('Input description')
+	const [description, setDescription] = useState('')
 	const [error, setError] = useState(null)
 	const [variant, setVariant] = useState('Default')
 	const [radius, setRadius] = useState(5)
