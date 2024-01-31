@@ -9,6 +9,19 @@ export function Signin() {
 		password: '',
 	})
 
+	const formConfigInputsRef = useRef(null)
+	const [configInputs, setConfigInputs] = useState({
+		placeholder: 'Your email',
+		label: 'Email',
+		description: '',
+		error: null,
+		variant: 'Default',
+		radius: 5,
+		size: 16,
+		disabled: false,
+		asterisk: true,
+	})
+
 	const handleChange = (e) => {
 		setInputs((prev) => ({
 			...prev,
@@ -16,28 +29,19 @@ export function Signin() {
 		}))
 	}
 
-	const [placeholder, setPlaceholder] = useState('Your email')
-	const [label, setLabel] = useState('Email')
-	const [description, setDescription] = useState('')
-	const [error, setError] = useState(null)
-	const [variant, setVariant] = useState('Default')
-	const [radius, setRadius] = useState(5)
-	const [size, setSize] = useState(16)
-	const [disabled, setDisabled] = useState(false)
-	const [asterisk, setAsterisk] = useState(true)
-
-	const emailRef = useRef()
-	const passwordRef = useRef()
-
-	const handlePlaceholderChange = (e) => setPlaceholder(e.target.value)
-	const handleLabelChange = (e) => setLabel(e.target.value)
-	const handleDescriptionChange = (e) => setDescription(e.target.value)
-	const handleErrorChange = (e) => setError(e.target.value)
-	const handleVariantChange = (e) => setVariant(e.target.value)
-	const handleBorderRadiusChange = (e) => setRadius(e.target.value)
-	const handleFontSizeChange = (e) => setSize(e.target.value)
-	const handleDisabledChange = () => setDisabled((prev) => !prev)
-	const handleAsteriskChange = () => setAsterisk((prev) => !prev)
+	const handleConfigInputsChange = (e) => {
+		if (e.target.name === 'disabled' || e.target.name === 'asterisk') {
+			setConfigInputs((prev) => ({
+				...prev,
+				[e.target.name]: !prev[e.target.name],
+			}))
+		} else {
+			setConfigInputs((prev) => ({
+				...prev,
+				[e.target.name]: e.target.value,
+			}))
+		}
+	}
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
@@ -51,42 +55,40 @@ export function Signin() {
 			<div>
 				<form ref={formRef} onChange={handleChange} onSubmit={handleSubmit}>
 					<CustomInput
-						label={label}
+						label={configInputs.label}
 						className={
-							variant === 'Default'
+							configInputs.variant === 'Default'
 								? styles.inputField
-								: variant === 'Filled'
+								: configInputs.variant === 'Filled'
 								? styles.inputFilled
 								: styles.inputUnstyled
 						}
-						required={asterisk}
+						required={configInputs.asterisk}
 						type="email"
 						id="email"
 						name="email"
-						placeholder={placeholder}
+						placeholder={configInputs.placeholder}
 						defaultValue={inputs.email}
-						ref={emailRef}
-						description={description}
-						error={error}
-						variant={variant}
-						radius={radius}
-						size={size}
-						disabled={disabled}
+						description={configInputs.description}
+						error={configInputs.error}
+						variant={configInputs.variant}
+						radius={configInputs.radius}
+						size={configInputs.size}
+						disabled={configInputs.disabled}
 					/>
 					<CustomInput
 						label="Password"
-						required={asterisk}
+						required={configInputs.asterisk}
 						type="password"
 						id="password"
 						name="password"
 						placeholder="Your password"
 						defaultValue={inputs.password}
-						ref={passwordRef}
 						description="This is the password field"
-						error={error}
-						variant={variant}
-						radius={radius}
-						size={size}
+						error={configInputs.error}
+						variant={configInputs.variant}
+						radius={configInputs.radius}
+						size={configInputs.size}
 						disabled={false}
 					/>
 					<Button type="submit">Отправить</Button>
@@ -94,92 +96,85 @@ export function Signin() {
 			</div>
 
 			<div className={styles.settings}>
-				<CustomInput
-					label="Placeholder"
-					type="text"
-					id="placeholder"
-					name="placeholder"
-					placeholder="Placeholder"
-					value={placeholder}
-					radius={5}
-					onChange={handlePlaceholderChange}
-				/>
-				<CustomInput
-					label="Label"
-					type="text"
-					id="label"
-					name="label"
-					placeholder="Label"
-					value={label}
-					radius={5}
-					onChange={handleLabelChange}
-				/>
-				<CustomInput
-					label="Description"
-					type="text"
-					id="description"
-					name="description"
-					placeholder="Description"
-					radius={5}
-					onChange={handleDescriptionChange}
-				/>
-				<CustomInput
-					label="Error"
-					type="text"
-					id="error"
-					name="error"
-					placeholder="Error"
-					radius={5}
-					onChange={handleErrorChange}
-				/>
-				<CustomSelect
-					label="Variant"
-					type="select"
-					id="variant"
-					name="variant"
-					value={variant}
-					onChange={handleVariantChange}
-				/>
-				<CustomInput
-					label="Radius"
-					type="range"
-					id="radius"
-					name="radius"
-					min="0"
-					max="15"
-					step="5"
-					value={radius}
-					onChange={handleBorderRadiusChange}
-				/>
-				<CustomInput
-					label="Size"
-					type="range"
-					id="size"
-					name="size"
-					min="12"
-					max="28"
-					step="4"
-					value={size}
-					onChange={handleFontSizeChange}
-				/>
-				<CustomInput
-					className={styles.toggle}
-					label="Disabled"
-					type="checkbox"
-					id="disabled"
-					name="disabled"
-					checked={disabled}
-					onChange={handleDisabledChange}
-				/>
-				<CustomInput
-					className={styles.toggle}
-					label="With asterisk"
-					type="checkbox"
-					id="asterisk"
-					name="asterisk"
-					checked={asterisk}
-					onChange={handleAsteriskChange}
-				/>
+				<form ref={formConfigInputsRef} onChange={handleConfigInputsChange}>
+					<CustomInput
+						label="Placeholder"
+						type="text"
+						id="placeholder"
+						name="placeholder"
+						placeholder="Placeholder"
+						defaultValue={configInputs.placeholder}
+						radius={5}
+					/>
+					<CustomInput
+						label="Label"
+						type="text"
+						id="label"
+						name="label"
+						placeholder="Label"
+						defaultValue={configInputs.label}
+						radius={5}
+					/>
+					<CustomInput
+						label="Description"
+						type="text"
+						id="description"
+						name="description"
+						placeholder="Description"
+						radius={5}
+					/>
+					<CustomInput
+						label="Error"
+						type="text"
+						id="error"
+						name="error"
+						placeholder="Error"
+						radius={5}
+					/>
+					<CustomSelect
+						label="Variant"
+						type="select"
+						id="variant"
+						name="variant"
+						defaultValue={configInputs.variant}
+					/>
+					<CustomInput
+						label="Radius"
+						type="range"
+						id="radius"
+						name="radius"
+						min="0"
+						max="15"
+						step="5"
+						defaultValue={configInputs.radius}
+					/>
+					<CustomInput
+						label="Size"
+						type="range"
+						id="size"
+						name="size"
+						min="12"
+						max="28"
+						step="4"
+						defaultValue={configInputs.size}
+					/>
+					<CustomInput
+						className={styles.toggle}
+						label="Disabled"
+						type="checkbox"
+						id="disabled"
+						name="disabled"
+						defaultChecked={configInputs.disabled}
+					/>
+					<CustomInput
+						className={styles.toggle}
+						label="With asterisk"
+						type="checkbox"
+						id="asterisk"
+						name="asterisk"
+						defaultChecked={configInputs.asterisk}
+					/>
+				</form>
 			</div>
 		</div>
 	)
