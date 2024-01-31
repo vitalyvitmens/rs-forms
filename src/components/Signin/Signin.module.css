@@ -70,3 +70,82 @@
 	-moz-transition: ease 0.3s;
 	-o-transition: ease 0.3s;
 }
+
+.inputField {
+	display: block;
+	color: gray;
+	background-color: rgb(255, 255, 255);
+	height: 30px;
+	min-height: 30px;
+	padding: 0 10px;
+	width: 340px;
+	font-size: 12px;
+	font-stretch: 100%;
+	font-weight: 400;
+	line-height: 28px;
+	border: 2px solid rgb(206, 212, 218);
+}
+
+.inputField:focus {
+	border: 2px solid dodgerblue;
+	outline: none;
+}
+
+.inputField:disabled {
+	background: rgb(248, 216, 216);
+	border-color: rgb(248, 216, 216);
+	box-shadow: none;
+	cursor: not-allowed;
+}
+
+.inputFilled {
+	display: block;
+	color: gray;
+	background-color: dodgerblue;
+	height: 30px;
+	min-height: 30px;
+	padding: 0 10px;
+	width: 340px;
+	font-size: 12px;
+	font-stretch: 100%;
+	font-weight: 400;
+	line-height: 28px;
+	border: 2px solid rgb(206, 212, 218);
+}
+
+.inputFilled:focus {
+	border: 2px solid dodgerblue;
+	outline: none;
+}
+
+.inputFilled:disabled {
+	background: rgb(248, 216, 216);
+	border-color: rgb(248, 216, 216);
+	box-shadow: none;
+	cursor: not-allowed;
+}
+
+.inputUnstyled {
+	display: block;
+	color: gray;
+	background-color: bisque;
+	height: 30px;
+	min-height: 30px;
+	padding: 0 10px;
+	width: 340px;
+	font-size: 12px;
+	font-stretch: 100%;
+	font-weight: 400;
+	line-height: 28px;
+	border: none;
+}
+
+.inputUnstyled:focus {
+	outline: none;
+}
+
+.inputUnstyled:disabled {
+	background: rgb(248, 216, 216);
+	box-shadow: none;
+	cursor: not-allowed;
+}
