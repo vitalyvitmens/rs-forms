@@ -45,6 +45,13 @@ export function Signin(props) {
 				<form onSubmit={handleSubmit}>
 					<CustomInput
 						label={label}
+						className={
+							variant === 'Default'
+								? styles.inputField
+								: variant === 'Filled'
+								? styles.inputFilled
+								: styles.inputUnstyled
+						}
 						required={asterisk}
 						type="email"
 						id="email"
