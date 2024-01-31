@@ -2,9 +2,19 @@ import { useState, useRef } from 'react'
 import { CustomInput, Button, CustomSelect } from '../../components'
 import styles from './Signin.module.css'
 
-export function Signin(props) {
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
+export function Signin() {
+	const formRef = useRef(null)
+	const [inputs, setInputs] = useState({
+		email: '',
+		password: '',
+	})
+
+	const handleChange = (e) => {
+		setInputs((prev) => ({
+			...prev,
+			[e.target.name]: e.target.value,
+		}))
+	}
 
 	const [placeholder, setPlaceholder] = useState('Your email')
 	const [label, setLabel] = useState('Email')
@@ -19,8 +29,6 @@ export function Signin(props) {
 	const emailRef = useRef()
 	const passwordRef = useRef()
 
-	const handleEmailChange = (e) => setEmail(e.target.value)
-	const handlePasswordChange = (e) => setPassword(e.target.value)
 	const handlePlaceholderChange = (e) => setPlaceholder(e.target.value)
 	const handleLabelChange = (e) => setLabel(e.target.value)
 	const handleDescriptionChange = (e) => setDescription(e.target.value)
@@ -33,16 +41,15 @@ export function Signin(props) {
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
-		const emailValue = emailRef.current.value
-		const passwordValue = passwordRef.current.value
-
-		props.onSubmit(emailValue, passwordValue)
+		console.log('####: submit', inputs)
+		formRef.current.reset()
+		setInputs({})
 	}
 
 	return (
 		<div className={styles.signin}>
 			<div>
-				<form onSubmit={handleSubmit}>
+				<form ref={formRef} onChange={handleChange} onSubmit={handleSubmit}>
 					<CustomInput
 						label={label}
 						className={
@@ -57,7 +64,7 @@ export function Signin(props) {
 						id="email"
 						name="email"
 						placeholder={placeholder}
-						value={email}
+						defaultValue={inputs.email}
 						ref={emailRef}
 						description={description}
 						error={error}
@@ -65,7 +72,6 @@ export function Signin(props) {
 						radius={radius}
 						size={size}
 						disabled={disabled}
-						onChange={handleEmailChange}
 					/>
 					<CustomInput
 						label="Password"
@@ -74,7 +80,7 @@ export function Signin(props) {
 						id="password"
 						name="password"
 						placeholder="Your password"
-						value={password}
+						defaultValue={inputs.password}
 						ref={passwordRef}
 						description="This is the password field"
 						error={error}
@@ -82,7 +88,6 @@ export function Signin(props) {
 						radius={radius}
 						size={size}
 						disabled={false}
-						onChange={handlePasswordChange}
 					/>
 					<Button type="submit">Отправить</Button>
 				</form>
