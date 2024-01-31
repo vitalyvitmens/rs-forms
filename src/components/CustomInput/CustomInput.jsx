@@ -15,7 +15,7 @@ export const CustomInput = forwardRef((props, ref) => {
 			</label>
 			<span className={styles.description}>{props.description}</span>
 			<input
-				className={styles.inputField}
+				className={props.error ? styles.inputFieldError : styles.inputField}
 				{...props}
 				ref={ref}
 				style={{
