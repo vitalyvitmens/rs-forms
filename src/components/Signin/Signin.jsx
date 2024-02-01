@@ -2,7 +2,7 @@ import { useState, useRef } from 'react'
 import { CustomInput, Button, CustomSelect } from '../../components'
 import styles from './Signin.module.css'
 
-export function Signin() {
+export function Signin({ onSubmit }) {
 	const formRef = useRef(null)
 	const [inputs, setInputs] = useState({
 		email: '',
@@ -45,51 +45,56 @@ export function Signin() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
-		console.log('####: submit', inputs)
+		onSubmit(inputs.email, inputs.password)
 		formRef.current.reset()
-		setInputs({})
+		setInputs({ email: '', password: '' })
 	}
+
+	const inputsStyle = configInputs.error
+		? styles.inputFieldError
+		: configInputs.variant === 'Default'
+		? styles.inputField
+		: configInputs.variant === 'Filled'
+		? styles.inputFilled
+		: styles.inputUnstyled
 
 	return (
 		<div className={styles.signin}>
 			<div>
-				<form ref={formRef} onChange={handleChange} onSubmit={handleSubmit}>
+				<form ref={formRef} onSubmit={handleSubmit}>
 					<CustomInput
 						label={configInputs.label}
-						className={
-							configInputs.variant === 'Default'
-								? styles.inputField
-								: configInputs.variant === 'Filled'
-								? styles.inputFilled
-								: styles.inputUnstyled
-						}
+						className={inputsStyle}
 						required={configInputs.asterisk}
 						type="email"
 						id="email"
 						name="email"
 						placeholder={configInputs.placeholder}
-						defaultValue={inputs.email}
+						value={inputs.email}
 						description={configInputs.description}
 						error={configInputs.error}
 						variant={configInputs.variant}
 						radius={configInputs.radius}
 						size={configInputs.size}
 						disabled={configInputs.disabled}
+						onChange={handleChange}
 					/>
 					<CustomInput
 						label="Password"
+						className={inputsStyle}
 						required={configInputs.asterisk}
 						type="password"
 						id="password"
 						name="password"
 						placeholder="Your password"
-						defaultValue={inputs.password}
+						value={inputs.password}
 						description="This is the password field"
 						error={configInputs.error}
 						variant={configInputs.variant}
 						radius={configInputs.radius}
 						size={configInputs.size}
-						disabled={false}
+						disabled={configInputs.disabled}
+						onChange={handleChange}
 					/>
 					<Button type="submit">Отправить</Button>
 				</form>
