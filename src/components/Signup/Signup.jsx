@@ -81,9 +81,10 @@ export function Signup({ onSubmit }) {
 			<div>
 				<form ref={formRef} onSubmit={handleSubmit}>
 					<CustomInput
-						label={configInputs.label}
 						className={inputsStyle}
+						label={configInputs.label}
 						required={configInputs.asterisk}
+						autoComplete="name"
 						type="text"
 						id="name"
 						name="name"
@@ -98,8 +99,8 @@ export function Signup({ onSubmit }) {
 						onChange={handleChange}
 					/>
 					<CustomInput
-						label="Nickname"
 						className={inputsStyle}
+						label="Nickname"
 						required={configInputs.asterisk}
 						type="text"
 						id="nickname"
@@ -115,9 +116,10 @@ export function Signup({ onSubmit }) {
 						onChange={handleChange}
 					/>
 					<CustomInput
-						label="Email"
 						className={inputsStyle}
+						label="Email"
 						required={configInputs.asterisk}
+						autoComplete="email"
 						type="email"
 						id="email"
 						name="email"
@@ -132,18 +134,25 @@ export function Signup({ onSubmit }) {
 						onChange={handleChange}
 					/>
 					<CustomInput
-						label="Gender"
-						className={inputsStyle}
+						className={styles.gender}
+						label="Male"
 						required={configInputs.asterisk}
-						type="text"
-						id="gender"
+						type="radio"
+						id="male"
 						name="gender"
-						placeholder="Your gender"
-						value={inputs.gender}
-						description={configInputs.description}
-						error={configInputs.error}
-						variant={configInputs.variant}
-						radius={configInputs.radius}
+						value="male"
+						size={configInputs.size}
+						disabled={configInputs.disabled}
+						onChange={handleChange}
+					/>
+					<CustomInput
+						className={styles.gender}
+						label="Female"
+						required={configInputs.asterisk}
+						type="radio"
+						id="female"
+						name="gender"
+						value="female"
 						size={configInputs.size}
 						disabled={configInputs.disabled}
 						onChange={handleChange}
