@@ -7,14 +7,17 @@
 	align-items: center;
 	border: 2px solid rgba(190, 190, 190, 0.4);
 	border-radius: 10px;
+  box-shadow: -2px 7px 10px #333;
 }
 
 .settings {
-	margin: 0 0 0 30px;
-	padding: 30px 0 30px 30px;
+	margin: 0 -33px 0 30px;
+	padding: 30px 30px 30px 30px;
 	text-align: start;
 	font-size: 16px;
 	border-left: 2px solid rgba(190, 190, 190, 0.4);
+  border-radius: 10px;
+  box-shadow: -3px 3px 10px #333;
 }
 
 .toggle {
@@ -146,6 +149,33 @@
 
 .inputUnstyled:disabled {
 	background: rgb(248, 216, 216);
+	box-shadow: none;
+	cursor: not-allowed;
+}
+
+.inputFieldError {
+	display: block;
+	color: rgb(250, 82, 82);
+	background-color: rgb(255, 255, 255);
+	height: 30px;
+	min-height: 30px;
+	padding: 0 10px;
+	width: 340px;
+	font-size: 12px;
+	font-stretch: 100%;
+	font-weight: 400;
+	line-height: 28px;
+	border: 2px solid rgb(250, 82, 82);
+}
+
+.inputFieldError:focus {
+	border: 2px solid rgb(250, 82, 82);
+	outline: none;
+}
+
+.inputFieldError:disabled {
+	background: rgb(248, 216, 216);
+	border-color: rgb(250, 82, 82);
 	box-shadow: none;
 	cursor: not-allowed;
 }
