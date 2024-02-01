@@ -180,3 +180,13 @@
 	box-shadow: none;
 	cursor: not-allowed;
 }
+
+.gender {
+	width: 25px;
+	height: 25px;
+	cursor: pointer;
+}
+
+.gender:disabled {
+	cursor: not-allowed;
+}
