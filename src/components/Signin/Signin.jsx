@@ -63,9 +63,10 @@ export function Signin({ onSubmit }) {
 			<div>
 				<form ref={formRef} onSubmit={handleSubmit}>
 					<CustomInput
-						label={configInputs.label}
 						className={inputsStyle}
+						label={configInputs.label}
 						required={configInputs.asterisk}
+            autoComplete="email"
 						type="email"
 						id="email"
 						name="email"
@@ -80,8 +81,8 @@ export function Signin({ onSubmit }) {
 						onChange={handleChange}
 					/>
 					<CustomInput
-						label="Password"
 						className={inputsStyle}
+						label="Password"
 						required={configInputs.asterisk}
 						type="password"
 						id="password"
