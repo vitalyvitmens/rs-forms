@@ -1,3 +1,3 @@
-import icon from '../../assets/icon.png'
+import sobaka from '../../assets/sobaka.png'
 
-export const IconAt = () => icon
+export const IconAt = () => sobaka
