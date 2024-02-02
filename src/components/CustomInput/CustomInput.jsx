@@ -9,7 +9,13 @@ export const CustomInput = forwardRef((props, ref) => {
 
 	return (
 		<div className={styles.customInput}>
-			<label className={styles.lable} htmlFor={props.id}>
+			<label
+				className={styles.lable}
+				htmlFor={props.id}
+				style={{
+					fontSize: props.size + 'px',
+				}}
+			>
 				{props.label}
 				{props.required && <span style={asteriskStyle}>*</span>}
 			</label>
