@@ -1,142 +1,186 @@
 import { useState, useRef } from 'react'
-import { CustomInput, Button } from '../../components'
+import { CustomInput, Button, CustomSelect } from '../../components'
+import styles from './Signin.module.css'
 
-export function Signin(props) {
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
+export function Signin({ onSubmit }) {
+	const formRef = useRef(null)
+	const [inputs, setInputs] = useState({
+		email: '',
+		password: '',
+	})
 
-	const [placeholder, setPlaceholder] = useState('You email')
-	const [label, setLabel] = useState('Email')
-	const [description, setDescription] = useState('Input description')
-	const [radius, setRadius] = useState(5)
-	const [size, setSize] = useState(16)
-	const [disabled, setDisabled] = useState(false)
+	const formConfigInputsRef = useRef(null)
+	const [configInputs, setConfigInputs] = useState({
+		placeholder: 'Your email',
+		label: 'Email',
+		description: '',
+		error: null,
+		variant: 'Default',
+		radius: 5,
+		size: 16,
+		disabled: false,
+		asterisk: true,
+	})
 
-	const emailRef = useRef()
-	const passwordRef = useRef()
+	const handleChange = (e) => {
+		setInputs((prev) => ({
+			...prev,
+			[e.target.name]: e.target.value,
+		}))
+	}
 
-	const handleEmailChange = (e) => setEmail(e.target.value)
-	const handlePasswordChange = (e) => setPassword(e.target.value)
-	const handlePlaceholderChange = (e) => setPlaceholder(e.target.value)
-	const handleLabelChange = (e) => setLabel(e.target.value)
-	const handleDescriptionChange = (e) => setDescription(e.target.value)
-	const handleBorderRadiusChange = (e) => setRadius(e.target.value)
-	const handleFontSizeChange = (e) => setSize(e.target.value)
-	const handleDisabledChange = (e) => setDisabled(e.target.checked)
+	const handleConfigInputsChange = (e) => {
+		if (e.target.name === 'disabled' || e.target.name === 'asterisk') {
+			setConfigInputs((prev) => ({
+				...prev,
+				[e.target.name]: !prev[e.target.name],
+			}))
+		} else {
+			setConfigInputs((prev) => ({
+				...prev,
+				[e.target.name]: e.target.value,
+			}))
+		}
+	}
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
-		const emailValue = emailRef.current.value
-		const passwordValue = passwordRef.current.value
-
-		props.onSubmit(emailValue, passwordValue)
+		onSubmit(inputs.email, inputs.password)
+		formRef.current.reset()
+		setInputs({ email: '', password: '' })
 	}
 
-	return (
-		<div className="App">
-			<h3>Настраиваемый инпут</h3>
-			<form onSubmit={handleSubmit}>
-				<CustomInput
-					type="email"
-					id="email"
-					name="email"
-					value={email}
-					onChange={handleEmailChange}
-					ref={emailRef}
-					required
-					placeholder={placeholder}
-					label={label}
-					description={description}
-					radius={radius}
-					size={size}
-					disabled={disabled}
-				/>
-				<CustomInput
-					type="password"
-					id="password"
-					name="password"
-					value={password}
-					onChange={handlePasswordChange}
-					ref={passwordRef}
-					required
-					placeholder="You password"
-					label="Пароль"
-					description="Это поле для ввода пароля"
-					radius={10}
-					size={20}
-					disabled={false}
-				/>
-				<Button type="submit">Отправить</Button>
-			</form>
+	const inputsStyle = configInputs.error
+		? styles.inputFieldError
+		: configInputs.variant === 'Default'
+		? styles.inputField
+		: configInputs.variant === 'Filled'
+		? styles.inputFilled
+		: styles.inputUnstyled
 
-			<div className="settings">
-				<h3>Настройки инпута</h3>
-				<div>
-					<label htmlFor="placeholder">Placeholder:</label>
-					<input
+	return (
+		<div className={styles.signin}>
+			<div>
+				<form ref={formRef} onSubmit={handleSubmit}>
+					<CustomInput
+						className={inputsStyle}
+						label={configInputs.label}
+						required={configInputs.asterisk}
+            autoComplete="email"
+						type="email"
+						id="email"
+						name="email"
+						placeholder={configInputs.placeholder}
+						value={inputs.email}
+						description={configInputs.description}
+						error={configInputs.error}
+						variant={configInputs.variant}
+						radius={configInputs.radius}
+						size={configInputs.size}
+						disabled={configInputs.disabled}
+						onChange={handleChange}
+					/>
+					<CustomInput
+						className={inputsStyle}
+						label="Password"
+						required={configInputs.asterisk}
+						type="password"
+						id="password"
+						name="password"
+						placeholder="Your password"
+						value={inputs.password}
+						description="This is the password field"
+						error={configInputs.error}
+						variant={configInputs.variant}
+						radius={configInputs.radius}
+						size={configInputs.size}
+						disabled={configInputs.disabled}
+						onChange={handleChange}
+					/>
+					<Button type="submit">Отправить</Button>
+				</form>
+			</div>
+
+			<div className={styles.settings}>
+				<form ref={formConfigInputsRef} onChange={handleConfigInputsChange}>
+					<CustomInput
+						label="Placeholder"
 						type="text"
 						id="placeholder"
 						name="placeholder"
-						value={placeholder}
-						onChange={handlePlaceholderChange}
+						placeholder="Placeholder"
+						defaultValue={configInputs.placeholder}
+						radius={5}
 					/>
-				</div>
-				<div>
-					<label htmlFor="label">Label:</label>
-					<input
+					<CustomInput
+						label="Label"
 						type="text"
 						id="label"
 						name="label"
-						value={label}
-						onChange={handleLabelChange}
+						placeholder="Label"
+						defaultValue={configInputs.label}
+						radius={5}
 					/>
-				</div>
-				<div>
-					<label htmlFor="description">Description:</label>
-					<input
+					<CustomInput
+						label="Description"
 						type="text"
 						id="description"
 						name="description"
-						value={description}
-						onChange={handleDescriptionChange}
+						placeholder="Description"
+						radius={5}
 					/>
-				</div>
-				<div>
-					<label htmlFor="radius">Radius:</label>
-					<input
+					<CustomInput
+						label="Error"
+						type="text"
+						id="error"
+						name="error"
+						placeholder="Error"
+						radius={5}
+					/>
+					<CustomSelect
+						label="Variant"
+						type="select"
+						id="variant"
+						name="variant"
+						defaultValue={configInputs.variant}
+					/>
+					<CustomInput
+						label="Radius"
 						type="range"
 						id="radius"
 						name="radius"
 						min="0"
-						max="20"
-            step="5"
-						value={radius}
-						onChange={handleBorderRadiusChange}
+						max="15"
+						step="5"
+						defaultValue={configInputs.radius}
 					/>
-				</div>
-				<div>
-					<label htmlFor="size">Size:</label>
-					<input
+					<CustomInput
+						label="Size"
 						type="range"
 						id="size"
 						name="size"
-						min="10"
-						max="30"
-            step="5"
-						value={size}
-						onChange={handleFontSizeChange}
+						min="12"
+						max="28"
+						step="4"
+						defaultValue={configInputs.size}
 					/>
-				</div>
-				<div>
-					<label htmlFor="disabled">Disabled:</label>
-					<input
+					<CustomInput
+						className={styles.toggle}
+						label="Disabled"
 						type="checkbox"
 						id="disabled"
 						name="disabled"
-						checked={disabled}
-						onChange={handleDisabledChange}
+						defaultChecked={configInputs.disabled}
 					/>
-				</div>
+					<CustomInput
+						className={styles.toggle}
+						label="With asterisk"
+						type="checkbox"
+						id="asterisk"
+						name="asterisk"
+						defaultChecked={configInputs.asterisk}
+					/>
+				</form>
 			</div>
 		</div>
 	)

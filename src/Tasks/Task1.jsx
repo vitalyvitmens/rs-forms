@@ -1,13 +1,25 @@
-import { Signin } from '../components'
+import { Signin, Signup } from '../components'
 
 export function Task1() {
-	const onSubmit = (email, password) => {
+	const onSubmitSignin = (email, password) => {
 		console.log(email, password)
+	}
+
+	const onSubmitSignup = (
+		name,
+		nickname,
+		email,
+		gender,
+		password,
+		confirmPassword
+	) => {
+		console.log(name, nickname, email, gender, password, confirmPassword)
 	}
 
 	return (
 		<div>
-			<Signin onSubmit={onSubmit} />
+			<Signin onSubmit={onSubmitSignin} />
+			<Signup onSubmit={onSubmitSignup} />
 		</div>
 	)
 }

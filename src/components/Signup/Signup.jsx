@@ -1,139 +1,283 @@
 import { useState, useRef } from 'react'
-import { CustomInput, Button } from '../../components'
+import { CustomInput, Button, CustomSelect, IconAt } from '../../components'
+import styles from './Signup.module.css'
 
-export function Signup(props) {
-	const [name, setName] = useState('')
-	const [nickname, setNickname] = useState('')
-	const [email, setEmail] = useState('')
-	const [gender, setGender] = useState('')
-	const [password, setPassword] = useState('')
-	const [confirmPassword, setConfirmPassword] = useState('')
+export function Signup({ onSubmit }) {
+	const formRef = useRef(null)
+	const [inputs, setInputs] = useState({
+		name: '',
+		nickname: '',
+		email: '',
+		gender: '',
+		password: '',
+		confirmPassword: '',
+	})
 
-	const nameRef = useRef()
-	const nicknameRef = useRef()
-	const emailRef = useRef()
-	const genderRef = useRef()
-	const passwordRef = useRef()
-	const confirmPasswordRef = useRef()
+	const formConfigInputsRef = useRef(null)
+	const [configInputs, setConfigInputs] = useState({
+		placeholder: 'Your name',
+		label: 'Name',
+		description: '',
+		error: null,
+		variant: 'Default',
+		radius: 5,
+		size: 16,
+		disabled: false,
+		asterisk: true,
+	})
 
-	const handleNameChange = (e) => setName(e.target.value)
-	const handleNicknameChange = (e) => setNickname(e.target.value)
-	const handleEmailChange = (e) => setEmail(e.target.value)
-	const handleGenderChange = (e) => setGender(e.target.value)
-	const handlePasswordChange = (e) => setPassword(e.target.value)
-	const handleConfirmPasswordChange = (e) => setConfirmPassword(e.target.value)
-
-	const handleSubmit = (e) => {
-		e.preDefault()
-		const nameValue = nameRef.current.value
-		const nicknameValue = nicknameRef.current.value
-		const emailValue = emailRef.current.value
-		const genderValue = genderRef.current.value
-		const passwordValue = passwordRef.current.value
-		const confirmPasswordValue = confirmPasswordRef.current.value
-
-		if (passwordValue !== confirmPasswordValue) {
-			alert('Пароли не совпадают')
-			return
-		}
-
-		props.onSubmit(
-			nameValue,
-			nicknameValue,
-			emailValue,
-			genderValue,
-			passwordValue
-		)
+	const handleChange = (e) => {
+		setInputs((prev) => ({
+			...prev,
+			[e.target.name]: e.target.value,
+		}))
 	}
 
+	const handleConfigInputsChange = (e) => {
+		if (e.target.name === 'disabled' || e.target.name === 'asterisk') {
+			setConfigInputs((prev) => ({
+				...prev,
+				[e.target.name]: !prev[e.target.name],
+			}))
+		} else {
+			setConfigInputs((prev) => ({
+				...prev,
+				[e.target.name]: e.target.value,
+			}))
+		}
+	}
+
+	const handleSubmit = (e) => {
+		e.preventDefault()
+		onSubmit(
+			inputs.name,
+			inputs.nickname,
+			inputs.email,
+			inputs.gender,
+			inputs.password,
+			inputs.confirmPassword
+		)
+		formRef.current.reset()
+		setInputs({
+			name: '',
+			nickname: '',
+			email: '',
+			gender: '',
+			password: '',
+			confirmPassword: '',
+		})
+	}
+
+	const inputsStyle = configInputs.error
+		? styles.inputFieldError
+		: configInputs.variant === 'Default'
+		? styles.inputField
+		: configInputs.variant === 'Filled'
+		? styles.inputFilled
+		: styles.inputUnstyled
+
 	return (
-		<form onSubmit={handleSubmit}>
+		<div className={styles.signup}>
 			<div>
-				<label htmlFor="name">Имя:</label>
-				<CustomInput
-					type="text"
-					id="name"
-					name="name"
-					value={name}
-					onChange={handleNameChange}
-					ref={nameRef}
-					required
-				/>
+				<form ref={formRef} onSubmit={handleSubmit}>
+					<CustomInput
+						className={inputsStyle}
+						label={configInputs.label}
+						required={configInputs.asterisk}
+						autoComplete="name"
+						type="text"
+						id="name"
+						name="name"
+						placeholder={configInputs.placeholder}
+						value={inputs.name}
+						description={configInputs.description}
+						error={configInputs.error}
+						variant={configInputs.variant}
+						radius={configInputs.radius}
+						size={configInputs.size}
+						disabled={configInputs.disabled}
+						onChange={handleChange}
+					/>
+					<CustomInput
+						className={inputsStyle}
+						label="Nickname"
+						required={configInputs.asterisk}
+						type="text"
+						id="nickname"
+						name="nickname"
+						placeholder="Your nickname"
+						value={inputs.nickname}
+						description={configInputs.description}
+						error={configInputs.error}
+						variant={configInputs.variant}
+						radius={configInputs.radius}
+						size={configInputs.size}
+						disabled={configInputs.disabled}
+						onChange={handleChange}
+						// icon={<IconAt size="0.8rem" />}
+						sobaka={IconAt()}
+					/>
+					<CustomInput
+						className={inputsStyle}
+						label="Email"
+						required={configInputs.asterisk}
+						autoComplete="email"
+						type="email"
+						id="email"
+						name="email"
+						placeholder="Your email"
+						value={inputs.email}
+						description={configInputs.description}
+						error={configInputs.error}
+						variant={configInputs.variant}
+						radius={configInputs.radius}
+						size={configInputs.size}
+						disabled={configInputs.disabled}
+						onChange={handleChange}
+					/>
+					<CustomInput
+						className={styles.gender}
+						label="Male"
+						required={configInputs.asterisk}
+						type="radio"
+						id="male"
+						name="gender"
+						value="male"
+						size={configInputs.size}
+						disabled={configInputs.disabled}
+						onChange={handleChange}
+					/>
+					<CustomInput
+						className={styles.gender}
+						label="Female"
+						required={configInputs.asterisk}
+						type="radio"
+						id="female"
+						name="gender"
+						value="female"
+						size={configInputs.size}
+						disabled={configInputs.disabled}
+						onChange={handleChange}
+					/>
+					<CustomInput
+						label="Password"
+						className={inputsStyle}
+						required={configInputs.asterisk}
+						type="password"
+						id="password"
+						name="password"
+						placeholder="Your password"
+						value={inputs.password}
+						description="This is the password field"
+						error={configInputs.error}
+						variant={configInputs.variant}
+						radius={configInputs.radius}
+						size={configInputs.size}
+						disabled={configInputs.disabled}
+						onChange={handleChange}
+					/>
+					<CustomInput
+						label="Confirm Password"
+						className={inputsStyle}
+						required={configInputs.asterisk}
+						type="password"
+						id="confirmPassword"
+						name="confirmPassword"
+						placeholder="Your confirm password"
+						value={inputs.confirmPassword}
+						description="This is the confirm password field"
+						error={configInputs.error}
+						variant={configInputs.variant}
+						radius={configInputs.radius}
+						size={configInputs.size}
+						disabled={configInputs.disabled}
+						onChange={handleChange}
+					/>
+					<Button type="submit">Отправить</Button>
+				</form>
 			</div>
-			<div>
-				<label htmlFor="nickname">Ник:</label>
-				<CustomInput
-					type="text"
-					id="nickname"
-					name="nickname"
-					value={nickname}
-					onChange={handleNicknameChange}
-					ref={nicknameRef}
-					required
-				/>
+
+			<div className={styles.settings}>
+				<form ref={formConfigInputsRef} onChange={handleConfigInputsChange}>
+					<CustomInput
+						label="Placeholder"
+						type="text"
+						id="placeholder"
+						name="placeholder"
+						placeholder="Placeholder"
+						defaultValue={configInputs.placeholder}
+						radius={5}
+					/>
+					<CustomInput
+						label="Label"
+						type="text"
+						id="label"
+						name="label"
+						placeholder="Label"
+						defaultValue={configInputs.label}
+						radius={5}
+					/>
+					<CustomInput
+						label="Description"
+						type="text"
+						id="description"
+						name="description"
+						placeholder="Description"
+						radius={5}
+					/>
+					<CustomInput
+						label="Error"
+						type="text"
+						id="error"
+						name="error"
+						placeholder="Error"
+						radius={5}
+					/>
+					<CustomSelect
+						label="Variant"
+						type="select"
+						id="variant"
+						name="variant"
+						defaultValue={configInputs.variant}
+					/>
+					<CustomInput
+						label="Radius"
+						type="range"
+						id="radius"
+						name="radius"
+						min="0"
+						max="15"
+						step="5"
+						defaultValue={configInputs.radius}
+					/>
+					<CustomInput
+						label="Size"
+						type="range"
+						id="size"
+						name="size"
+						min="12"
+						max="28"
+						step="4"
+						defaultValue={configInputs.size}
+					/>
+					<CustomInput
+						className={styles.toggle}
+						label="Disabled"
+						type="checkbox"
+						id="disabled"
+						name="disabled"
+						defaultChecked={configInputs.disabled}
+					/>
+					<CustomInput
+						className={styles.toggle}
+						label="With asterisk"
+						type="checkbox"
+						id="asterisk"
+						name="asterisk"
+						defaultChecked={configInputs.asterisk}
+					/>
+				</form>
 			</div>
-			<div>
-				<label htmlFor="email">Почта:</label>
-				<CustomInput
-					type="email"
-					id="email"
-					name="email"
-					value={email}
-					onChange={handleEmailChange}
-					ref={emailRef}
-					required
-				/>
-			</div>
-			<div>
-				<label htmlFor="gender">Пол:</label>
-				<CustomInput
-					type="radio"
-					id="male"
-					name="gender"
-					value="male"
-					onChange={handleGenderChange}
-					ref={genderRef}
-					required
-				/>
-				<label htmlFor="male">Мужской</label>
-				<CustomInput
-					type="radio"
-					id="female"
-					name="gender"
-					value="female"
-					onChange={handleGenderChange}
-					ref={genderRef}
-					required
-				/>
-				<label htmlFor="female">Женский</label>
-			</div>
-			<div>
-				<label htmlFor="password">Пароль:</label>
-				<CustomInput
-					type="password"
-					id="password"
-					name="password"
-					value={password}
-					onChange={handlePasswordChange}
-					ref={passwordRef}
-					required
-				/>
-			</div>
-			<div>
-				<label htmlFor="confirmPassword">Повторить пароль:</label>
-				<CustomInput
-					type="password"
-					id="confirmPassword"
-					name="confirmPassword"
-					value={confirmPassword}
-					onChange={handleConfirmPasswordChange}
-					ref={confirmPasswordRef}
-					required
-				/>
-			</div>
-			<div>
-				<Button type="submit">Зарегистрироваться</Button>
-			</div>
-		</form>
+		</div>
 	)
 }
