@@ -21,14 +21,14 @@ export const CustomInput = forwardRef((props, ref) => {
 				style={{
 					borderRadius: props.radius + 'px',
 					fontSize: props.size + 'px',
-					backgroundImage: props.icon ? `url(${props.icon})` : 'none',
+					backgroundImage: props.sobaka ? `url(${props.sobaka})` : 'none',
 					backgroundPosition: 'left center',
 					backgroundRepeat: 'no-repeat',
 					backgroundSize: props.size + 'px',
-					paddingLeft: props.icon && '30px',
-					transform: props.icon && 'scaleX(0.95)',
-					marginLeft: props.icon && '-10px',
-					marginRight: props.icon && '-10px',
+					paddingLeft: props.sobaka && '30px',
+					transform: props.sobaka && 'scaleX(0.95)',
+					marginLeft: props.sobaka && '-10px',
+					marginRight: props.sobaka && '-10px',
 				}}
 			/>
 			<span className={styles.error}>{props.error}</span>
