@@ -1,14 +1,15 @@
 .signin {
 	display: flex;
+	background-color: bisque;
 	direction: row;
-  margin-bottom: 50px;
+	margin-bottom: 50px;
 	padding: 0 15px;
 	width: 100%;
 	justify-content: center;
 	align-items: center;
 	border: 2px solid rgba(190, 190, 190, 0.4);
 	border-radius: 10px;
-  box-shadow: -2px 7px 10px #333;
+	box-shadow: -2px 7px 10px #333;
 }
 
 .settings {
@@ -17,8 +18,8 @@
 	text-align: start;
 	font-size: 16px;
 	border-left: 2px solid rgba(190, 190, 190, 0.4);
-  border-radius: 10px;
-  box-shadow: -3px 3px 10px #333;
+	border-radius: 10px;
+	box-shadow: -3px 3px 10px #333;
 }
 
 .toggle {
