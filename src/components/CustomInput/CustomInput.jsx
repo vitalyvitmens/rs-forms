@@ -21,6 +21,14 @@ export const CustomInput = forwardRef((props, ref) => {
 				style={{
 					borderRadius: props.radius + 'px',
 					fontSize: props.size + 'px',
+					backgroundImage: props.icon ? `url(${props.icon})` : 'none',
+					backgroundPosition: 'left center',
+					backgroundRepeat: 'no-repeat',
+					backgroundSize: props.size + 'px',
+					paddingLeft: props.icon && '30px',
+					transform: props.icon && 'scaleX(0.95)',
+					marginLeft: props.icon && '-10px',
+					marginRight: props.icon && '-10px',
 				}}
 			/>
 			<span className={styles.error}>{props.error}</span>
