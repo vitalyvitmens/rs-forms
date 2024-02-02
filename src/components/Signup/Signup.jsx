@@ -115,7 +115,7 @@ export function Signup({ onSubmit }) {
 						disabled={configInputs.disabled}
 						onChange={handleChange}
 						// icon={<IconAt size="0.8rem" />}
-						icon={IconAt()}
+						sobaka={IconAt()}
 					/>
 					<CustomInput
 						className={inputsStyle}
