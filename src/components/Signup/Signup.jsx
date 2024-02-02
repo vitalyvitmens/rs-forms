@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { CustomInput, Button, CustomSelect } from '../../components'
+import { CustomInput, Button, CustomSelect, IconAt } from '../../components'
 import styles from './Signup.module.css'
 
 export function Signup({ onSubmit }) {
@@ -114,6 +114,8 @@ export function Signup({ onSubmit }) {
 						size={configInputs.size}
 						disabled={configInputs.disabled}
 						onChange={handleChange}
+						// icon={<IconAt size="0.8rem" />}
+						icon={IconAt()}
 					/>
 					<CustomInput
 						className={inputsStyle}
