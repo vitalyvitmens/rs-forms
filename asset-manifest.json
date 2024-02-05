@@ -2,8 +2,8 @@
   "files": {
     "main.css": "/static/css/main.87d5b8cc.css",
     "main.js": "/static/js/main.8834dfb6.js",
-    "static/media/space.png": "/static/media/space.2e30322dabe0e146d3f2.png",
-    "static/media/sobaka.png": "/static/media/sobaka.8220e06caee6fcce8948.png",
+    "static/media/space.png": "/build/static/media/space.2e30322dabe0e146d3f2.png",
+    "static/media/sobaka.png": "./build/static/media/sobaka.8220e06caee6fcce8948.png",
     "index.html": "/index.html",
     "main.87d5b8cc.css.map": "/static/css/main.87d5b8cc.css.map",
     "main.8834dfb6.js.map": "/static/js/main.8834dfb6.js.map"
