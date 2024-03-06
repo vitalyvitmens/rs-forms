@@ -86,7 +86,7 @@ export function Signup({ onSubmit }) {
 						required={configInputs.asterisk}
 						autoComplete="name"
 						type="text"
-						id="name"
+						id="name-signup"
 						name="name"
 						placeholder={configInputs.placeholder}
 						value={inputs.name}
@@ -103,7 +103,7 @@ export function Signup({ onSubmit }) {
 						label="Nickname"
 						required={configInputs.asterisk}
 						type="text"
-						id="nickname"
+						id="nickname-signup"
 						name="nickname"
 						placeholder="Your nickname"
 						value={inputs.nickname}
@@ -123,7 +123,7 @@ export function Signup({ onSubmit }) {
 						required={configInputs.asterisk}
 						autoComplete="email"
 						type="email"
-						id="email"
+						id="email-signup"
 						name="email"
 						placeholder="Your email"
 						value={inputs.email}
@@ -140,7 +140,7 @@ export function Signup({ onSubmit }) {
 						label="Male"
 						required={configInputs.asterisk}
 						type="radio"
-						id="male"
+						id="male-signup"
 						name="gender"
 						value="male"
 						size={configInputs.size}
@@ -152,7 +152,7 @@ export function Signup({ onSubmit }) {
 						label="Female"
 						required={configInputs.asterisk}
 						type="radio"
-						id="female"
+						id="female-signup"
 						name="gender"
 						value="female"
 						size={configInputs.size}
@@ -164,7 +164,7 @@ export function Signup({ onSubmit }) {
 						className={inputsStyle}
 						required={configInputs.asterisk}
 						type="password"
-						id="password"
+						id="password-signup"
 						name="password"
 						placeholder="Your password"
 						value={inputs.password}
@@ -181,7 +181,7 @@ export function Signup({ onSubmit }) {
 						className={inputsStyle}
 						required={configInputs.asterisk}
 						type="password"
-						id="confirmPassword"
+						id="confirmPassword-signup"
 						name="confirmPassword"
 						placeholder="Your confirm password"
 						value={inputs.confirmPassword}
@@ -202,7 +202,7 @@ export function Signup({ onSubmit }) {
 					<CustomInput
 						label="Placeholder"
 						type="text"
-						id="placeholder"
+						id="placeholder-signup"
 						name="placeholder"
 						placeholder="Placeholder"
 						defaultValue={configInputs.placeholder}
@@ -211,7 +211,7 @@ export function Signup({ onSubmit }) {
 					<CustomInput
 						label="Label"
 						type="text"
-						id="label"
+						id="label-signup"
 						name="label"
 						placeholder="Label"
 						defaultValue={configInputs.label}
@@ -220,7 +220,7 @@ export function Signup({ onSubmit }) {
 					<CustomInput
 						label="Description"
 						type="text"
-						id="description"
+						id="description-signup"
 						name="description"
 						placeholder="Description"
 						radius={5}
@@ -228,7 +228,7 @@ export function Signup({ onSubmit }) {
 					<CustomInput
 						label="Error"
 						type="text"
-						id="error"
+						id="error-signup"
 						name="error"
 						placeholder="Error"
 						radius={5}
@@ -236,14 +236,14 @@ export function Signup({ onSubmit }) {
 					<CustomSelect
 						label="Variant"
 						type="select"
-						id="variant"
+						id="variant-signup"
 						name="variant"
 						defaultValue={configInputs.variant}
 					/>
 					<CustomInput
 						label="Radius"
 						type="range"
-						id="radius"
+						id="radius-signup"
 						name="radius"
 						min="0"
 						max="15"
@@ -253,7 +253,7 @@ export function Signup({ onSubmit }) {
 					<CustomInput
 						label="Size"
 						type="range"
-						id="size"
+						id="size-signup"
 						name="size"
 						min="12"
 						max="28"
@@ -264,7 +264,7 @@ export function Signup({ onSubmit }) {
 						className={styles.toggle}
 						label="Disabled"
 						type="checkbox"
-						id="disabled"
+						id="disabled-signup"
 						name="disabled"
 						defaultChecked={configInputs.disabled}
 					/>
@@ -272,7 +272,7 @@ export function Signup({ onSubmit }) {
 						className={styles.toggle}
 						label="With asterisk"
 						type="checkbox"
-						id="asterisk"
+						id="asterisk-signup"
 						name="asterisk"
 						defaultChecked={configInputs.asterisk}
 					/>
