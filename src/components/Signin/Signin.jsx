@@ -4,7 +4,7 @@ import styles from './Signin.module.css'
 
 export function Signin({ onSubmit }) {
 	const formRef = useRef(null)
-	const [inputs, setInputs] = useState({
+	const [formState, setFormState] = useState({
 		email: '',
 		password: '',
 	})
@@ -23,7 +23,7 @@ export function Signin({ onSubmit }) {
 	})
 
 	const handleChange = (e) => {
-		setInputs((prev) => ({
+		setFormState((prev) => ({
 			...prev,
 			[e.target.name]: e.target.value,
 		}))
@@ -45,9 +45,9 @@ export function Signin({ onSubmit }) {
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
-		onSubmit(inputs.email, inputs.password)
+		onSubmit(formState.email, formState.password)
 		formRef.current.reset()
-		setInputs({ email: '', password: '' })
+		setFormState({ email: '', password: '' })
 	}
 
 	const inputsStyle = configInputs.error
@@ -71,7 +71,7 @@ export function Signin({ onSubmit }) {
 						id="email"
 						name="email"
 						placeholder={configInputs.placeholder}
-						value={inputs.email}
+						value={formState.email}
 						description={configInputs.description}
 						error={configInputs.error}
 						variant={configInputs.variant}
@@ -88,7 +88,7 @@ export function Signin({ onSubmit }) {
 						id="password"
 						name="password"
 						placeholder="Your password"
-						value={inputs.password}
+						value={formState.password}
 						description="This is the password field"
 						error={configInputs.error}
 						variant={configInputs.variant}
