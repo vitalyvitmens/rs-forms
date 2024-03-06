@@ -50,13 +50,21 @@ export function Signin({ onSubmit }) {
 		setFormState({ email: '', password: '' })
 	}
 
-	const inputsStyle = configInputs.error
-		? styles.inputFieldError
-		: configInputs.variant === 'Default'
-		? styles.inputField
-		: configInputs.variant === 'Filled'
-		? styles.inputFilled
-		: styles.inputUnstyled
+	let inputsStyle = styles.inputUnstyled
+
+	switch (configInputs.variant) {
+		case 'Default':
+			inputsStyle = styles.inputField
+			break
+		case 'Filled':
+			inputsStyle = styles.inputFilled
+			break
+		default:
+	}
+
+	if (configInputs.error) {
+		inputsStyle = styles.inputFieldError
+	}
 
 	return (
 		<div className={styles.signin}>
