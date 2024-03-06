@@ -4,7 +4,7 @@ import styles from './Signup.module.css'
 
 export function Signup({ onSubmit }) {
 	const formRef = useRef(null)
-	const [inputs, setInputs] = useState({
+	const [formState, setFormState] = useState({
 		name: '',
 		nickname: '',
 		email: '',
@@ -27,7 +27,7 @@ export function Signup({ onSubmit }) {
 	})
 
 	const handleChange = (e) => {
-		setInputs((prev) => ({
+		setFormState((prev) => ({
 			...prev,
 			[e.target.name]: e.target.value,
 		}))
@@ -50,15 +50,15 @@ export function Signup({ onSubmit }) {
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		onSubmit(
-			inputs.name,
-			inputs.nickname,
-			inputs.email,
-			inputs.gender,
-			inputs.password,
-			inputs.confirmPassword
+			formState.name,
+			formState.nickname,
+			formState.email,
+			formState.gender,
+			formState.password,
+			formState.confirmPassword
 		)
 		formRef.current.reset()
-		setInputs({
+		setFormState({
 			name: '',
 			nickname: '',
 			email: '',
@@ -89,7 +89,7 @@ export function Signup({ onSubmit }) {
 						id="name-signup"
 						name="name"
 						placeholder={configInputs.placeholder}
-						value={inputs.name}
+						value={formState.name}
 						description={configInputs.description}
 						error={configInputs.error}
 						variant={configInputs.variant}
@@ -106,7 +106,7 @@ export function Signup({ onSubmit }) {
 						id="nickname-signup"
 						name="nickname"
 						placeholder="Your nickname"
-						value={inputs.nickname}
+						value={formState.nickname}
 						description={configInputs.description}
 						error={configInputs.error}
 						variant={configInputs.variant}
@@ -126,7 +126,7 @@ export function Signup({ onSubmit }) {
 						id="email-signup"
 						name="email"
 						placeholder="Your email"
-						value={inputs.email}
+						value={formState.email}
 						description={configInputs.description}
 						error={configInputs.error}
 						variant={configInputs.variant}
@@ -167,7 +167,7 @@ export function Signup({ onSubmit }) {
 						id="password-signup"
 						name="password"
 						placeholder="Your password"
-						value={inputs.password}
+						value={formState.password}
 						description="This is the password field"
 						error={configInputs.error}
 						variant={configInputs.variant}
@@ -184,7 +184,7 @@ export function Signup({ onSubmit }) {
 						id="confirmPassword-signup"
 						name="confirmPassword"
 						placeholder="Your confirm password"
-						value={inputs.confirmPassword}
+						value={formState.confirmPassword}
 						description="This is the confirm password field"
 						error={configInputs.error}
 						variant={configInputs.variant}
