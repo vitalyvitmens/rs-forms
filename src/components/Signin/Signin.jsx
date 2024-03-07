@@ -50,28 +50,22 @@ export function Signin({ onSubmit }) {
 		setFormState({ email: '', password: '' })
 	}
 
-	let inputsStyle = styles.inputUnstyled
+	const inputStyleValid =
+		configInputs.variant === 'Default'
+			? styles.inputField
+			: (configInputs.variant === 'Filled' && styles.inputFilled) ||
+			  styles.inputUnstyled
 
-	switch (configInputs.variant) {
-		case 'Default':
-			inputsStyle = styles.inputField
-			break
-		case 'Filled':
-			inputsStyle = styles.inputFilled
-			break
-		default:
-	}
-
-	if (configInputs.error) {
-		inputsStyle = styles.inputFieldError
-	}
+	const inputStyleErrorOrValid = configInputs.error
+		? styles.inputFieldError
+		: inputStyleValid
 
 	return (
 		<div className={styles.signin}>
 			<div>
 				<form ref={formRef} onSubmit={handleSubmit}>
 					<CustomInput
-						className={inputsStyle}
+						className={inputStyleErrorOrValid}
 						label={configInputs.label}
 						required={configInputs.asterisk}
 						autoComplete="email"
@@ -89,7 +83,7 @@ export function Signin({ onSubmit }) {
 						onChange={handleChange}
 					/>
 					<CustomInput
-						className={inputsStyle}
+						className={inputStyleErrorOrValid}
 						label="Password"
 						required={configInputs.asterisk}
 						type="password"

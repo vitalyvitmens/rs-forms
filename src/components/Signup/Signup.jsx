@@ -68,20 +68,22 @@ export function Signup({ onSubmit }) {
 		})
 	}
 
-	const inputsStyle = configInputs.error
+	const inputStyleValid =
+		configInputs.variant === 'Default'
+			? styles.inputField
+			: (configInputs.variant === 'Filled' && styles.inputFilled) ||
+			  styles.inputUnstyled
+
+	const inputStyleErrorOrValid = configInputs.error
 		? styles.inputFieldError
-		: configInputs.variant === 'Default'
-		? styles.inputField
-		: configInputs.variant === 'Filled'
-		? styles.inputFilled
-		: styles.inputUnstyled
+		: inputStyleValid
 
 	return (
 		<div className={styles.signup}>
 			<div>
 				<form ref={formRef} onSubmit={handleSubmit}>
 					<CustomInput
-						className={inputsStyle}
+						className={inputStyleErrorOrValid}
 						label={configInputs.label}
 						required={configInputs.asterisk}
 						autoComplete="name"
@@ -99,7 +101,7 @@ export function Signup({ onSubmit }) {
 						onChange={handleChange}
 					/>
 					<CustomInput
-						className={inputsStyle}
+						className={inputStyleErrorOrValid}
 						label="Nickname"
 						required={configInputs.asterisk}
 						type="text"
@@ -117,7 +119,7 @@ export function Signup({ onSubmit }) {
 						sobaka={IconAt()}
 					/>
 					<CustomInput
-						className={inputsStyle}
+						className={inputStyleErrorOrValid}
 						label="Email"
 						required={configInputs.asterisk}
 						autoComplete="email"
@@ -135,7 +137,7 @@ export function Signup({ onSubmit }) {
 						onChange={handleChange}
 					/>
 					<CustomInput
-						className={styles.gender}
+						className={inputStyleErrorOrValid}
 						label="Male"
 						required={configInputs.asterisk}
 						type="radio"
@@ -147,7 +149,7 @@ export function Signup({ onSubmit }) {
 						onChange={handleChange}
 					/>
 					<CustomInput
-						className={styles.gender}
+						className={inputStyleErrorOrValid}
 						label="Female"
 						required={configInputs.asterisk}
 						type="radio"
@@ -160,7 +162,7 @@ export function Signup({ onSubmit }) {
 					/>
 					<CustomInput
 						label="Password"
-						className={inputsStyle}
+						className={inputStyleErrorOrValid}
 						required={configInputs.asterisk}
 						type="password"
 						id="password-signup"
@@ -177,7 +179,7 @@ export function Signup({ onSubmit }) {
 					/>
 					<CustomInput
 						label="Confirm Password"
-						className={inputsStyle}
+						className={inputStyleErrorOrValid}
 						required={configInputs.asterisk}
 						type="password"
 						id="confirmPassword-signup"
