@@ -4,7 +4,7 @@ import styles from './Signup.module.css'
 
 export function Signup({ onSubmit }) {
 	const formRef = useRef(null)
-	const [inputs, setInputs] = useState({
+	const [formState, setFormState] = useState({
 		name: '',
 		nickname: '',
 		email: '',
@@ -27,7 +27,7 @@ export function Signup({ onSubmit }) {
 	})
 
 	const handleChange = (e) => {
-		setInputs((prev) => ({
+		setFormState((prev) => ({
 			...prev,
 			[e.target.name]: e.target.value,
 		}))
@@ -50,15 +50,15 @@ export function Signup({ onSubmit }) {
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		onSubmit(
-			inputs.name,
-			inputs.nickname,
-			inputs.email,
-			inputs.gender,
-			inputs.password,
-			inputs.confirmPassword
+			formState.name,
+			formState.nickname,
+			formState.email,
+			formState.gender,
+			formState.password,
+			formState.confirmPassword
 		)
 		formRef.current.reset()
-		setInputs({
+		setFormState({
 			name: '',
 			nickname: '',
 			email: '',
@@ -68,28 +68,30 @@ export function Signup({ onSubmit }) {
 		})
 	}
 
-	const inputsStyle = configInputs.error
+	const inputStyleValid =
+		configInputs.variant === 'Default'
+			? styles.inputField
+			: (configInputs.variant === 'Filled' && styles.inputFilled) ||
+			  styles.inputUnstyled
+
+	const inputStyleErrorOrValid = configInputs.error
 		? styles.inputFieldError
-		: configInputs.variant === 'Default'
-		? styles.inputField
-		: configInputs.variant === 'Filled'
-		? styles.inputFilled
-		: styles.inputUnstyled
+		: inputStyleValid
 
 	return (
 		<div className={styles.signup}>
 			<div>
 				<form ref={formRef} onSubmit={handleSubmit}>
 					<CustomInput
-						className={inputsStyle}
+						className={inputStyleErrorOrValid}
 						label={configInputs.label}
 						required={configInputs.asterisk}
 						autoComplete="name"
 						type="text"
-						id="name"
+						id="name-signup"
 						name="name"
 						placeholder={configInputs.placeholder}
-						value={inputs.name}
+						value={formState.name}
 						description={configInputs.description}
 						error={configInputs.error}
 						variant={configInputs.variant}
@@ -99,14 +101,14 @@ export function Signup({ onSubmit }) {
 						onChange={handleChange}
 					/>
 					<CustomInput
-						className={inputsStyle}
+						className={inputStyleErrorOrValid}
 						label="Nickname"
 						required={configInputs.asterisk}
 						type="text"
-						id="nickname"
+						id="nickname-signup"
 						name="nickname"
 						placeholder="Your nickname"
-						value={inputs.nickname}
+						value={formState.nickname}
 						description={configInputs.description}
 						error={configInputs.error}
 						variant={configInputs.variant}
@@ -114,19 +116,18 @@ export function Signup({ onSubmit }) {
 						size={configInputs.size}
 						disabled={configInputs.disabled}
 						onChange={handleChange}
-						// icon={<IconAt size="0.8rem" />}
 						sobaka={IconAt()}
 					/>
 					<CustomInput
-						className={inputsStyle}
+						className={inputStyleErrorOrValid}
 						label="Email"
 						required={configInputs.asterisk}
 						autoComplete="email"
 						type="email"
-						id="email"
+						id="email-signup"
 						name="email"
 						placeholder="Your email"
-						value={inputs.email}
+						value={formState.email}
 						description={configInputs.description}
 						error={configInputs.error}
 						variant={configInputs.variant}
@@ -136,11 +137,11 @@ export function Signup({ onSubmit }) {
 						onChange={handleChange}
 					/>
 					<CustomInput
-						className={styles.gender}
+						className={inputStyleErrorOrValid}
 						label="Male"
 						required={configInputs.asterisk}
 						type="radio"
-						id="male"
+						id="male-signup"
 						name="gender"
 						value="male"
 						size={configInputs.size}
@@ -148,11 +149,11 @@ export function Signup({ onSubmit }) {
 						onChange={handleChange}
 					/>
 					<CustomInput
-						className={styles.gender}
+						className={inputStyleErrorOrValid}
 						label="Female"
 						required={configInputs.asterisk}
 						type="radio"
-						id="female"
+						id="female-signup"
 						name="gender"
 						value="female"
 						size={configInputs.size}
@@ -161,13 +162,13 @@ export function Signup({ onSubmit }) {
 					/>
 					<CustomInput
 						label="Password"
-						className={inputsStyle}
+						className={inputStyleErrorOrValid}
 						required={configInputs.asterisk}
 						type="password"
-						id="password"
+						id="password-signup"
 						name="password"
 						placeholder="Your password"
-						value={inputs.password}
+						value={formState.password}
 						description="This is the password field"
 						error={configInputs.error}
 						variant={configInputs.variant}
@@ -178,13 +179,13 @@ export function Signup({ onSubmit }) {
 					/>
 					<CustomInput
 						label="Confirm Password"
-						className={inputsStyle}
+						className={inputStyleErrorOrValid}
 						required={configInputs.asterisk}
 						type="password"
-						id="confirmPassword"
+						id="confirmPassword-signup"
 						name="confirmPassword"
 						placeholder="Your confirm password"
-						value={inputs.confirmPassword}
+						value={formState.confirmPassword}
 						description="This is the confirm password field"
 						error={configInputs.error}
 						variant={configInputs.variant}
@@ -202,7 +203,7 @@ export function Signup({ onSubmit }) {
 					<CustomInput
 						label="Placeholder"
 						type="text"
-						id="placeholder"
+						id="placeholder-signup"
 						name="placeholder"
 						placeholder="Placeholder"
 						defaultValue={configInputs.placeholder}
@@ -211,7 +212,7 @@ export function Signup({ onSubmit }) {
 					<CustomInput
 						label="Label"
 						type="text"
-						id="label"
+						id="label-signup"
 						name="label"
 						placeholder="Label"
 						defaultValue={configInputs.label}
@@ -220,7 +221,7 @@ export function Signup({ onSubmit }) {
 					<CustomInput
 						label="Description"
 						type="text"
-						id="description"
+						id="description-signup"
 						name="description"
 						placeholder="Description"
 						radius={5}
@@ -228,7 +229,7 @@ export function Signup({ onSubmit }) {
 					<CustomInput
 						label="Error"
 						type="text"
-						id="error"
+						id="error-signup"
 						name="error"
 						placeholder="Error"
 						radius={5}
@@ -236,14 +237,14 @@ export function Signup({ onSubmit }) {
 					<CustomSelect
 						label="Variant"
 						type="select"
-						id="variant"
+						id="variant-signup"
 						name="variant"
 						defaultValue={configInputs.variant}
 					/>
 					<CustomInput
 						label="Radius"
 						type="range"
-						id="radius"
+						id="radius-signup"
 						name="radius"
 						min="0"
 						max="15"
@@ -253,7 +254,7 @@ export function Signup({ onSubmit }) {
 					<CustomInput
 						label="Size"
 						type="range"
-						id="size"
+						id="size-signup"
 						name="size"
 						min="12"
 						max="28"
@@ -264,7 +265,7 @@ export function Signup({ onSubmit }) {
 						className={styles.toggle}
 						label="Disabled"
 						type="checkbox"
-						id="disabled"
+						id="disabled-signup"
 						name="disabled"
 						defaultChecked={configInputs.disabled}
 					/>
@@ -272,7 +273,7 @@ export function Signup({ onSubmit }) {
 						className={styles.toggle}
 						label="With asterisk"
 						type="checkbox"
-						id="asterisk"
+						id="asterisk-signup"
 						name="asterisk"
 						defaultChecked={configInputs.asterisk}
 					/>

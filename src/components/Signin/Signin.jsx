@@ -4,7 +4,7 @@ import styles from './Signin.module.css'
 
 export function Signin({ onSubmit }) {
 	const formRef = useRef(null)
-	const [inputs, setInputs] = useState({
+	const [formState, setFormState] = useState({
 		email: '',
 		password: '',
 	})
@@ -23,7 +23,7 @@ export function Signin({ onSubmit }) {
 	})
 
 	const handleChange = (e) => {
-		setInputs((prev) => ({
+		setFormState((prev) => ({
 			...prev,
 			[e.target.name]: e.target.value,
 		}))
@@ -45,33 +45,35 @@ export function Signin({ onSubmit }) {
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
-		onSubmit(inputs.email, inputs.password)
+		onSubmit(formState.email, formState.password)
 		formRef.current.reset()
-		setInputs({ email: '', password: '' })
+		setFormState({ email: '', password: '' })
 	}
 
-	const inputsStyle = configInputs.error
+	const inputStyleValid =
+		configInputs.variant === 'Default'
+			? styles.inputField
+			: (configInputs.variant === 'Filled' && styles.inputFilled) ||
+			  styles.inputUnstyled
+
+	const inputStyleErrorOrValid = configInputs.error
 		? styles.inputFieldError
-		: configInputs.variant === 'Default'
-		? styles.inputField
-		: configInputs.variant === 'Filled'
-		? styles.inputFilled
-		: styles.inputUnstyled
+		: inputStyleValid
 
 	return (
 		<div className={styles.signin}>
 			<div>
 				<form ref={formRef} onSubmit={handleSubmit}>
 					<CustomInput
-						className={inputsStyle}
+						className={inputStyleErrorOrValid}
 						label={configInputs.label}
 						required={configInputs.asterisk}
-            autoComplete="email"
+						autoComplete="email"
 						type="email"
-						id="email"
+						id="email-signin"
 						name="email"
 						placeholder={configInputs.placeholder}
-						value={inputs.email}
+						value={formState.email}
 						description={configInputs.description}
 						error={configInputs.error}
 						variant={configInputs.variant}
@@ -81,14 +83,14 @@ export function Signin({ onSubmit }) {
 						onChange={handleChange}
 					/>
 					<CustomInput
-						className={inputsStyle}
+						className={inputStyleErrorOrValid}
 						label="Password"
 						required={configInputs.asterisk}
 						type="password"
-						id="password"
+						id="password-signin"
 						name="password"
 						placeholder="Your password"
-						value={inputs.password}
+						value={formState.password}
 						description="This is the password field"
 						error={configInputs.error}
 						variant={configInputs.variant}
@@ -106,7 +108,7 @@ export function Signin({ onSubmit }) {
 					<CustomInput
 						label="Placeholder"
 						type="text"
-						id="placeholder"
+						id="placeholder-signin"
 						name="placeholder"
 						placeholder="Placeholder"
 						defaultValue={configInputs.placeholder}
@@ -115,7 +117,7 @@ export function Signin({ onSubmit }) {
 					<CustomInput
 						label="Label"
 						type="text"
-						id="label"
+						id="label-signin"
 						name="label"
 						placeholder="Label"
 						defaultValue={configInputs.label}
@@ -124,7 +126,7 @@ export function Signin({ onSubmit }) {
 					<CustomInput
 						label="Description"
 						type="text"
-						id="description"
+						id="description-signin"
 						name="description"
 						placeholder="Description"
 						radius={5}
@@ -132,7 +134,7 @@ export function Signin({ onSubmit }) {
 					<CustomInput
 						label="Error"
 						type="text"
-						id="error"
+						id="error-signin"
 						name="error"
 						placeholder="Error"
 						radius={5}
@@ -140,14 +142,14 @@ export function Signin({ onSubmit }) {
 					<CustomSelect
 						label="Variant"
 						type="select"
-						id="variant"
+						id="variant-signin"
 						name="variant"
 						defaultValue={configInputs.variant}
 					/>
 					<CustomInput
 						label="Radius"
 						type="range"
-						id="radius"
+						id="radius-signin"
 						name="radius"
 						min="0"
 						max="15"
@@ -157,7 +159,7 @@ export function Signin({ onSubmit }) {
 					<CustomInput
 						label="Size"
 						type="range"
-						id="size"
+						id="size-signin"
 						name="size"
 						min="12"
 						max="28"
@@ -168,7 +170,7 @@ export function Signin({ onSubmit }) {
 						className={styles.toggle}
 						label="Disabled"
 						type="checkbox"
-						id="disabled"
+						id="disabled-signin"
 						name="disabled"
 						defaultChecked={configInputs.disabled}
 					/>
@@ -176,7 +178,7 @@ export function Signin({ onSubmit }) {
 						className={styles.toggle}
 						label="With asterisk"
 						type="checkbox"
-						id="asterisk"
+						id="asterisk-signin"
 						name="asterisk"
 						defaultChecked={configInputs.asterisk}
 					/>
